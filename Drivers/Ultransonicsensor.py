@@ -14,7 +14,7 @@ while True:
 
   GPIO.output(GPIO_TRIGGER, False)         #Set TRIG as LOW
   print ("Checking Stance")                #Checking the User stance
-  time.sleep(30)                           #Checking the user stance for 30 Seconds
+  time.sleep(10)                           #Checking the user stance for 30 Seconds
 
   GPIO.output(GPIO_TRIGGER, True)          #Set TRIG as HIGH
   time.sleep(0.00001)                      #Delay of 0.00001 seconds
@@ -31,7 +31,7 @@ while True:
   distance = pulse_duration * 17150        #Calculate distance
   distance = round(distance, 2)            #Round to two decimal points
 
-  if distance > 8 and distance < 20:       #Testing the Stance of the user within shoulder length which is on average 8-10cm apart
+  if distance > 0 and distance < 20:       #Testing the Stance of the user within shoulder length which is on average 8-10cm apart
     print (":",distance - 0.5,"cm")        #Distance with calibration
   else:
     print ("User not standing correctly")  #User was not standing at 8-10cm apart
