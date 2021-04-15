@@ -11,16 +11,16 @@ try:
     while 1:                    # Loop will run forever
     if test_text =0:
          pwm.ChangeDutyCycle(0) # Change duty cycle
-            sleep(0.01)  
+            sleep(.01)  
     elif test_text =1 :
             pwm.ChangeDutyCycle(25) # Change duty cycle
-            sleep(0.01)         
+            sleep(10)         
     elif test_text =2:
        pwm.ChangeDutyCycle(100) # Change duty cycle
-            sleep(0.01)
+            sleep(10)
     elif test_text =3: 
          pwm.ChangeDutyCycle(100) # Change duty cycle
-            sleep(0.01)
+            sleep(10)
      else:
         print "enter an accepetable value"
         pwm.ChangeDutyCycle(0) 
