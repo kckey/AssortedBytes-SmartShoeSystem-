@@ -9,63 +9,97 @@ i2c = busio.I2C(board.SCL, board.SDA)
 accelerometer = adafruit_adxl34x.ADXL345(i2c)
 
 accel = []
-threshold = 3.0
+upperthreshold = 5.0
+lowerthreshold = -5.0
 steps = 0
+count = 0
 height = 72
 stride = 0
+distance = 0
+speed = 0
 start = time.time()
 
+#height = height * 0.0254
+
 while True:
-    StrideTime = time.time() - start
-    print(StrideTime)
+    StrideT = time.time() - start
+    StrideTime = (int(StrideT))
+    #print(StrideTime)
     x, y, z = accelerometer.acceleration
     mag = math.sqrt((x**2)+(y**2)+(z**2))
     accel.append(mag)
     mean = sum(accel) / len(accel)
     magzero = mag - mean
-    #print(magzero)
+    print(magzero)
     #print(accelerometer.acceleration)
     time.sleep(0.25)
 
-    if ( magzero > threshold ):
+    if ( magzero > upperthreshold ):
         steps = steps + 1
         print(steps)
-    else:
-        print( "No step detected" )
+        count = count + 1
+        #print(count)
+        #distance = distance + (stride * steps)
+        #print(distance)
+    if ( magzero < lowerthreshold ):
+        steps = steps + 1
+        print(steps)
+        count = count + 1
+        #print(count)
+        #distance = distance + (stride * steps)
+        #print(distance)
+    #else:
+        #print( "No step detected" )
 
-        if (StrideTime <= 2) & (steps < 2):
-            stride = height / 5
-            print(stride)
+        if(StrideTime % 2 == 0):
+            if (count == 1):
+                stride = height / 5
+                #print(stride)
+                distance = distance + (steps * stride)
+                #print(distance)
+                speed = count * (stride / 2)
+                print(speed)
+            if (count == 2):
+                stride = height / 4
+                #print(stride)
+                distance = distance + (steps * stride)
+                #print(distance)
+                speed = count * (stride / 2)
+                print(speed)
+            if (count == 3):
+                stride = height / 3
+                #print(stride)
+                distance = distance + (steps * stride)
+                #print(distance)
+                speed = count * (stride / 2)
+                print(speed)
+            if (count == 4):
+                stride = height / 2
+                #print(stride)
+                distance = distance + (steps * stride)
+                #print(distance)
+                speed = count * (stride / 2)
+                print(speed)
+            if (count == 5):
+                stride = height / 1.2
+                #print(stride)
+                distance = distance + (steps * stride)
+                #print(distance)
+                speed = count * (stride / 2)
+                print(speed)
+            if (6 <= count < 8):
+                stride = height
+                #print(stride)
+                distance = distance + (steps * stride)
+                #print(distance)
+                speed = count * (stride / 2)
+                print(speed)
+            if (count >= 8):
+                stride = height * 1.2
+                #print(stride)
+                distance = distance + (steps * stride)
+                #print(distance)
+                speed = count * (stride / 2)
+                print(speed)
         else:
-            print("nothing happened")
-        if (StrideTime <= 2) & (2 <= steps < 3):
-            stride = height / 4
-            print(stride)
-        else:
-            print("nothing happened")
-        if (StrideTime <= 2) & (3 <= steps < 4):
-            stride = height / 3
-            print(stride)
-        else:
-            print("nothing happened")
-        if (StrideTime <= 2) & (4 <= steps < 5):
-            stride = height / 2
-            print(stride)
-        else:
-            print("nothing happened")
-        if (StrideTime <= 2) & (5 <= steps < 6):
-            stride = height / 1.2
-            print(stride)
-        else:
-            print("nothing happened")
-        if (StrideTime <= 2) & (6 <= steps < 8):
-            stride = height
-            print(stride)
-        else:
-            print("nothing happened")
-        if (StrideTime <= 2) & (steps >= 8):
-            stride = height * 1.2
-            print(stride)
-        else:
-            print("nothing happened")
-            
+            count = 0
